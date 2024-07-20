@@ -30,3 +30,5 @@ this repo is only for the application's source code.
   * everything can be moved inside AWS for seamless integration
   * if still using Github actions the AWS credentials can be done via OIDC provider  
   instead of using programmatic access via key.
+  * The CI tests can be bundled in a container so that they are maintained centrally
+  outside the scope of this app repo.
