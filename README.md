@@ -32,3 +32,33 @@ this repo is only for the application's source code.
   instead of using programmatic access via key.
   * The CI tests can be bundled in a container so that they are maintained centrally
   outside the scope of this app repo.
+
+## Requirements
+
+* AWS account
+* Secret / access Key pair for authentication as an IAM user
+* That IAM user should have sufficient permissions to deploy the infrastructure
+
+## Repo structure
+
+### application
+
+The application folder contains:
+
+* the actual app code that will be packaged in the container
+* the requirements / dependencies needed
+* the Dockerfile for the image creation
+
+### helpers
+
+Contains python script that creates the S3 bucket needed for storing
+the terraform state if it doesn't exist.
+
+### images
+
+The Lucid diagrams used in the README.
+
+### infrastructure
+
+Contains the terraform code that creates the required AWS infrastructure 
+for the app to be deployed in.
