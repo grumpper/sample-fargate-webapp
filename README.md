@@ -42,6 +42,7 @@ things are kept rather simple.
 * Secret / access Key pair for authentication as an IAM user
 * That IAM user should have sufficient permissions to deploy the infrastructure
 * Configured tfbackend file for the terraform code (so S3 bucket already created)
+* ECR Repo to store the container images
 
 ### Examples for the required files:
 
