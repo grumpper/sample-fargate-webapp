@@ -26,6 +26,9 @@ Once the PR is merged the CD process triggers to deploy new version of the app.
 
 * The infrastructure part of the code can be moved to a separate git repo so that
 this repo is only for the application's source code. 
+* There is probably better implementation of the services. For example the ECR registry
+should have policy and lifecycle set. Since we are emphasizing on the CI/CD process here
+things are kept rather simple.
 * The CI/CD process can be improved to one of the following:
   * everything can be moved inside AWS for seamless integration
   * if still using Github actions the AWS credentials can be done via OIDC provider  

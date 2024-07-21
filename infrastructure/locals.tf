@@ -1,4 +1,3 @@
-
 locals {
   name_prefix = join("-", [
     random_pet.random.id,
