@@ -41,8 +41,26 @@ things are kept rather simple.
 * AWS account
 * Secret / access Key pair for authentication as an IAM user
 * That IAM user should have sufficient permissions to deploy the infrastructure
+* Configured tfbackend file for the terraform code (so S3 bucket already created)
 
-## Repo structure
+### Examples for the required files:
+
+#### state.auto.tfbackend
+
+```hcl
+bucket = "my-unique-random-bucket-name"
+key = "sample-fargate-webapp/terraform.tfstate"
+region = "eu-west-1"
+```
+
+#### input.auto.tfvars
+
+```hcl
+region = "eu-west-1"
+env = "staging"
+```
+
+## Repo Structure
 
 ### application
 
@@ -52,11 +70,6 @@ The application folder contains:
 * the requirements / dependencies needed
 * the Dockerfile for the image creation
 
-### helpers
-
-Contains python script that creates the S3 bucket needed for storing
-the terraform state if it doesn't exist.
-
 ### images
 
 The Lucid diagrams used in the README.
@@ -65,3 +78,10 @@ The Lucid diagrams used in the README.
 
 Contains the terraform code that creates the required AWS infrastructure 
 for the app to be deployed in.
+
+## How-To Deploy Manually
+
+1. `cd infrastructure`
+2. Create the necessary `.tfbackend` and `.tfvars` files
+3. Assume role with sufficient permissions
+4. `terraform init && terraform apply`
