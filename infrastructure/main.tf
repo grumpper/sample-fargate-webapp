@@ -115,7 +115,7 @@ module "ecs_cluster" {
           cpu       = 256
           memory    = 512
           essential = true
-          image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/flask-webapp:latest"
+          image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/flask-webapp:${var.image_tag}"
           port_mappings = [
             {
               name          = "flask-helloworld"
