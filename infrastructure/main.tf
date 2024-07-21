@@ -1,3 +1,17 @@
+# Create ECR repo to store the app container images
+resource "aws_ecr_repository" "registry" {
+  name                 = "flask-webapp"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
+  encryption_configuration {
+    encryption_type = "AES256"
+  }
+}
+
 # Create VPC for the Fargate and the ALB
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
@@ -33,13 +47,13 @@ module "alb" {
       description = "HTTP web traffic"
       cidr_ipv4   = "0.0.0.0/0"
     }
-#     all_https = {
-#       from_port   = 443
-#       to_port     = 443
-#       ip_protocol = "tcp"
-#       description = "HTTPS web traffic"
-#       cidr_ipv4   = "0.0.0.0/0"
-#     }
+    #     all_https = {
+    #       from_port   = 443
+    #       to_port     = 443
+    #       ip_protocol = "tcp"
+    #       description = "HTTPS web traffic"
+    #       cidr_ipv4   = "0.0.0.0/0"
+    #     }
   }
   security_group_egress_rules = {
     all = {
@@ -68,8 +82,8 @@ module "alb" {
     #       }
     #     }
     http = {
-      port            = 80
-      protocol        = "HTTP"
+      port     = 80
+      protocol = "HTTP"
 
       forward = {
         target_group_key = "fargate"
@@ -79,10 +93,11 @@ module "alb" {
 
   target_groups = {
     fargate = {
-      name_prefix = "h1"
-      protocol    = "HTTP"
-      port        = 80
-      target_type = "ip"
+      name_prefix       = "h1"
+      protocol          = "HTTP"
+      port              = 80
+      target_type       = "ip"
+      create_attachment = false
     }
   }
 }
@@ -92,11 +107,14 @@ module "ecs_cluster" {
   source  = "terraform-aws-modules/ecs/aws"
   version = "5.11.3"
 
-  cluster_name       = "${local.name_prefix}-cluster"
-  capacity_providers = ["FARGATE"]
-  default_capacity_provider_strategy = {
-    capacity_provider = "FARGATE"
-    weight            = 1
+  cluster_name = "${local.name_prefix}-cluster"
+
+  fargate_capacity_providers = {
+    FARGATE = {
+      default_capacity_provider_strategy = {
+        weight = 100
+      }
+    }
   }
 
   services = {
@@ -111,7 +129,7 @@ module "ecs_cluster" {
           cpu       = 256
           memory    = 512
           essential = true
-          image     = "${aws_ecr_repository.registry.repository_url}:latest"
+          image     = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com/flask-webapp:latest"
           port_mappings = [
             {
               name          = "flask-helloworld"

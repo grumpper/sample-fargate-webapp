@@ -45,7 +45,7 @@ things are kept rather simple.
 
 ### Examples for the required files:
 
-#### state.auto.tfbackend
+#### s3.tfbackend
 
 ```hcl
 bucket = "my-unique-random-bucket-name"
@@ -82,6 +82,6 @@ for the app to be deployed in.
 ## How-To Deploy Manually
 
 1. `cd infrastructure`
-2. Create the necessary `.tfbackend` and `.tfvars` files
-3. Assume role with sufficient permissions
-4. `terraform init && terraform apply`
+2. Assume role with sufficient permissions
+3. Adjust the `tfbackend` and `tfvars` files to work for you (i.e. change the bucket name)
+4. `terraform init -backend-config=s3.tfbackend && terraform apply`
