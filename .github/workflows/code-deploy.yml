@@ -66,5 +66,5 @@ jobs:
         working-directory: infrastructure
 
       - name: Terraform Apply
-        run: terraform apply -input=false -auto-approve tfplan
+        run: terraform apply -input=false -auto-approve
         working-directory: infrastructure
