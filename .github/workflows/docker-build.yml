@@ -2,7 +2,7 @@ name: App Build
 
 on:
   workflow_run:
-    workflows: ["Infra Tests", "App Tests"]
+    workflows: ["Code Tests"]
     types:
       - completed
 
