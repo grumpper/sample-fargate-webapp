@@ -7,3 +7,9 @@ variable "env" {
   type    = string
   default = "Which environment this is deployed in?"
 }
+
+variable "image_tag" {
+  type        = string
+  description = "the container image tag used for deployment"
+  default     = "latest"
+}

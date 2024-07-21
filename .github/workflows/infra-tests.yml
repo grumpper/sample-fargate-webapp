@@ -1,0 +1,41 @@
+name: Infra Tests
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Set up TFLint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: Run terraform fmt
+        run: |
+          terraform fmt -recursive
+          terraform init && terraform validate
+        working-directory: infrastructure
+
+      - name: Run terraform validate
+        run: |
+          terraform init
+          terraform validate
+        working-directory: infrastructure
+
+      - name: Run TFLint
+        run: |
+          tflint --init
+          tflint
+        working-directory: infrastructure
+
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          working_directory: infrastructure

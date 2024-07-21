@@ -1,17 +1,3 @@
-# Create ECR repo to store the app container images
-resource "aws_ecr_repository" "registry" {
-  name                 = "flask-webapp"
-  image_tag_mutability = "MUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  encryption_configuration {
-    encryption_type = "AES256"
-  }
-}
-
 # Create VPC for the Fargate and the ALB
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
