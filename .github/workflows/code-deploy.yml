@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    name: image-build
     runs-on: ubuntu-latest
 
     steps:
@@ -35,6 +36,7 @@ jobs:
         working-directory: application
 
   deploy:
+    name: code-deploy
     runs-on: ubuntu-latest
 
     steps:
