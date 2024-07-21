@@ -36,9 +36,9 @@ jobs:
           echo "TF_VAR_image_tag=${IMAGE_TAG}" >> $GITHUB_ENV
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -input=false
         working-directory: infrastructure
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -input=false -auto-approve tfplan
         working-directory: infrastructure

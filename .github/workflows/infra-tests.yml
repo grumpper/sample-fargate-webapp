@@ -20,13 +20,12 @@ jobs:
       - name: Run terraform fmt
         run: |
           terraform fmt -recursive
-          terraform init && terraform validate
         working-directory: infrastructure
 
       - name: Run terraform validate
         run: |
-          terraform init
-          terraform validate
+          terraform init -input=false
+          terraform validate -input=false
         working-directory: infrastructure
 
       - name: Run TFLint
