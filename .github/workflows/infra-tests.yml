@@ -24,7 +24,7 @@ jobs:
 
       - name: Run terraform validate
         run: |
-          terraform init -input=false
+          terraform init -backend-config=s3.tfbackend -input=false
           terraform validate -input=false
         working-directory: infrastructure
 
