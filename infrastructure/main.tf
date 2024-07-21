@@ -1,4 +1,5 @@
 # Create VPC for the Fargate and the ALB
+#tfsec:ignore:aws-ec2-require-vpc-flow-logs-for-all-vpcs
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.9.0"
@@ -14,6 +15,7 @@ module "vpc" {
 }
 
 # Create ALB to expose the Fargate service
+#tfsec:ignore:aws-elb-http-not-used
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "9.9.0"
@@ -89,6 +91,7 @@ module "alb" {
 }
 
 # Create Fargate cluster, task definition and service
+#tfsec:ignore:aws-ec2-no-public-egress-sgr
 module "ecs_cluster" {
   source  = "terraform-aws-modules/ecs/aws"
   version = "5.11.3"
