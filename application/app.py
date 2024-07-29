@@ -12,7 +12,7 @@ def hello_world():
     """
     Return a friendly HTTP greeting.
     """
-    return 'Hello, World!'
+    return 'Hello, everyone!'
 
 
 if __name__ == '__main__':
