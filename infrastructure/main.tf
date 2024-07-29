@@ -15,7 +15,6 @@ module "vpc" {
 }
 
 # Create ALB to expose the Fargate service
-#tfsec:ignore:aws-elb-http-not-used
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "9.9.0"
